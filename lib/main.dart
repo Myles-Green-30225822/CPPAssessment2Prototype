@@ -103,16 +103,20 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Row(children: [FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.handshake),
-      ),
-       FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-       // This trailing comma makes auto-formatting nicer for build methods.
-    ),],)
+              onPressed: _incrementCounter,
+              tooltip: 'Increment',
+              child: const Icon(Icons.handshake),
+            ),
+            FloatingActionButton(
+              onPressed: _incrementCounter,
+              tooltip: 'Increment',
+              child: const Icon(Icons.copy),
+            ),
+            FloatingActionButton(
+              onPressed: _incrementCounter,
+              tooltip: 'Increment',
+              child: const Icon(Icons.cut),
+            ),],)
           ],
         ),
       ),
