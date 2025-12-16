@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'dart:math';
 void main() {
   runApp(const MyApp());
 }
@@ -38,11 +38,31 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _result = "";
-  String _AIresult = "";
+  String _aiResult = "";
+  String _playerChoice = "";
+  String _winnerText = "";
+  var _choices = ["Rock", "Paper", "Scissors"];
+  var _randomAIChoice = Random().nextInt(2);
 
   void _winningPlayer(String _result) {
     setState(() {
-      print(_result);
+      _playerChoice = _result;
+      _aiResult = _choices[_randomAIChoice];
+      if((_playerChoice == "Rock" && _aiResult == "Scissors")
+      || (_playerChoice == "Paper" && _aiResult == "Rock")
+      || (_playerChoice == "Scissors" && _aiResult == "Paper")) {
+        _winnerText = "Player 1 - Wins!";
+      }
+      else if((_playerChoice == "Scissors" && _aiResult == "Rock")
+      || (_playerChoice == "Rock" && _aiResult == "Paper")
+      || (_playerChoice == "Paper" && _aiResult == "Scissors")) {
+        _winnerText = "Player 2 - Wins!";
+      }
+      else if((_playerChoice == "Rock" && _aiResult == "Rock")
+      || (_playerChoice == "Paper" && _aiResult == "Paper")
+      || (_playerChoice == "Scissors" && _aiResult == "Scissors")) {
+        _winnerText = "Draw";
+      }
     });
   }
 
@@ -55,13 +75,24 @@ class _MyHomePageState extends State<MyHomePage> {
       body: 
       Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'You have chosen:',
             ),
             Text(
-              '$_AIresult',
+              '$_playerChoice',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const Text(
+              'The enemy has chosen:',
+            ),
+            Text(
+              '$_aiResult',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              '$_winnerText',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Row(
