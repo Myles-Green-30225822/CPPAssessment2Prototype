@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:async';
 void main() {
   runApp(const MyApp());
 }
@@ -42,26 +43,45 @@ class _MyHomePageState extends State<MyHomePage> {
   String _playerChoice = "";
   String _winnerText = "";
   var _choices = ["Rock", "Paper", "Scissors"];
-  var _randomAIChoice = Random().nextInt(2);
+  var _randomAIChoice = null;
+
+  void _gameReset() {
+    setState(() {
+          _playerChoice = "";
+          _aiResult = "";
+          _winnerText = "";
+          _randomAIChoice = null;
+        });
+  }
 
   void _winningPlayer(String _result) {
     setState(() {
       _playerChoice = _result;
+      _randomAIChoice = Random().nextInt(2);
       _aiResult = _choices[_randomAIChoice];
       if((_playerChoice == "Rock" && _aiResult == "Scissors")
       || (_playerChoice == "Paper" && _aiResult == "Rock")
       || (_playerChoice == "Scissors" && _aiResult == "Paper")) {
         _winnerText = "Player 1 - Wins!";
+        Timer(Duration(seconds: 3), () {
+          _gameReset();
+        });
       }
       else if((_playerChoice == "Scissors" && _aiResult == "Rock")
       || (_playerChoice == "Rock" && _aiResult == "Paper")
       || (_playerChoice == "Paper" && _aiResult == "Scissors")) {
         _winnerText = "Player 2 - Wins!";
+        Timer(Duration(seconds: 3), () {
+          _gameReset();
+        });
       }
       else if((_playerChoice == "Rock" && _aiResult == "Rock")
       || (_playerChoice == "Paper" && _aiResult == "Paper")
       || (_playerChoice == "Scissors" && _aiResult == "Scissors")) {
         _winnerText = "Draw";
+        Timer(Duration(seconds: 3), () {
+          _gameReset();
+        });
       }
     });
   }
