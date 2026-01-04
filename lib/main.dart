@@ -38,6 +38,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _buttonPressed = false;
   String _result = "";
   String _aiResult = "";
   String _playerChoice = "";
@@ -51,11 +52,13 @@ class _MyHomePageState extends State<MyHomePage> {
           _aiResult = "";
           _winnerText = "";
           _randomAIChoice = null;
+          _buttonPressed = false;
         });
   }
 
   void _winningPlayer(String _result) {
     setState(() {
+      _buttonPressed = false;
       _playerChoice = _result;
       _randomAIChoice = Random().nextInt(2);
       _aiResult = _choices[_randomAIChoice];
@@ -63,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       || (_playerChoice == "Paper" && _aiResult == "Rock")
       || (_playerChoice == "Scissors" && _aiResult == "Paper")) {
         _winnerText = "Player 1 - Wins!";
+        _buttonPressed = true;
         Timer(Duration(seconds: 3), () {
           _gameReset();
         });
@@ -71,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       || (_playerChoice == "Rock" && _aiResult == "Paper")
       || (_playerChoice == "Paper" && _aiResult == "Scissors")) {
         _winnerText = "Player 2 - Wins!";
+        _buttonPressed = true;
         Timer(Duration(seconds: 3), () {
           _gameReset();
         });
@@ -79,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
       || (_playerChoice == "Paper" && _aiResult == "Paper")
       || (_playerChoice == "Scissors" && _aiResult == "Scissors")) {
         _winnerText = "Draw";
+        _buttonPressed = true;
         Timer(Duration(seconds: 3), () {
           _gameReset();
         });
@@ -119,17 +125,17 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
-                  onPressed: () => _winningPlayer("Rock"),
+                  onPressed: _buttonPressed ? null : () => _winningPlayer("Rock"),
                   tooltip: 'Rock',
                   child: const Icon(Icons.handshake),
                 ),
                 FloatingActionButton(
-                  onPressed: () => _winningPlayer("Paper"),
+                  onPressed: _buttonPressed ? null : () => _winningPlayer("Paper"),
                   tooltip: 'Paper',
                   child: const Icon(Icons.copy),
                 ),
                 FloatingActionButton(
-                  onPressed: () => _winningPlayer("Scissors"),
+                  onPressed: _buttonPressed ? null : () => _winningPlayer("Scissors"),
                   tooltip: 'Scissors',
                   child: const Icon(Icons.cut),
                 )
